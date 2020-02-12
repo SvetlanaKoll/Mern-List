@@ -3,18 +3,20 @@ const mongoose = require('mongoose')
 const bodyParser  = require('body-parser')
 const path = require('path')
 const items = require('./routes/api/items')
-
+const dotenv = require('dotenv')
 const app = express()
 
+dotenv.config()
 //Body parser middleware
 app.use(bodyParser.json())
 
 //DB config 
-const db = require('./config/keys').mongoURI
+const mongoURI = process.env.MONGODB_URI
+
 
 //Connect to Mongo
 mongoose
-  .connect(db)
+  .connect(mongoURI)
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err))
 
